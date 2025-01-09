@@ -1,7 +1,4 @@
 import React, { useState } from 'react';
-
-import { FaChevronLeft, FaChevronRight, FaStar } from 'react-icons/fa6';
-
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -10,14 +7,14 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 
 // import required modules
-import { Autoplay, Navigation } from 'swiper/modules';
+import { Navigation } from 'swiper/modules';
+import { FaChevronLeft, FaChevronRight, FaStar } from 'react-icons/fa6';
 import { testimonialData } from '../constants/Testimonial';
-
 
 const Testimonials = () => {
 
-    const [isBeginning, setIsBeginning] = useState(true); // Track if on the first slide
-    const [isEnd, setIsEnd] = useState(false); // Track if on the last slide
+    const [isBeginning, setIsBeginning] = useState(true);
+    const [isEnd, setIsEnd] = useState(false);
 
     const breakpointsResponsive = {
         '@0.00': {
@@ -36,68 +33,63 @@ const Testimonials = () => {
             slidesPerView: 3,
             spaceBetween: 30,
         },
-    };
+    }
 
     const handleSwiperEvents = (swiper) => {
         setIsBeginning(swiper.isBeginning);
         setIsEnd(swiper.isEnd);
-    };
+    }
 
     return (
-        <div className="w-full h-full space-y-5 relative lg:px-24 md:px-16 sm:px-7 px-4 flex items-center justify-center flex-col">
+        <div className='w-full h-full space-y-5 relative lg:px-24 md:px-16 sm:px-7 px-4 flex items-center justify-center flex-col'>
+
             <div className="w-full flex items-center justify-between">
                 <h2 className="text-2xl text-neutral-300 font-semibold">
                     Testimonials
                 </h2>
 
-                {/* Custom Navigation Buttons */}
+                {/* Custom buttons */}
                 <div className="flex items-center gap-6">
-                    <button
-                        className={`custom-prev text-white bg-blue-600 hover:bg-blue-700 p-2 rounded-full z-10 ${isBeginning ? "cursor-not-allowed opacity-50" : "cursor-pointer"
-                            }`}
+                    <button className={`custom-prev text-neutral-50 bg-blue-600 hover:bg-blue-700 p-2 rounded-full z-10 ${isBeginning ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
                         disabled={isBeginning}
                     >
                         <FaChevronLeft size={20} />
                     </button>
-
-                    <button
-                        className={`custom-next text-white bg-blue-600 hover:bg-blue-700 p-2 rounded-full z-10 ${isEnd ? "cursor-not-allowed opacity-50" : "cursor-pointer"
-                            }`}
+                    <button className={`custom-next text-neutral-50 bg-blue-600 hover:bg-blue-700 p-2 rounded-full z-10 ${isEnd ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
                         disabled={isEnd}
                     >
                         <FaChevronRight size={20} />
                     </button>
                 </div>
+
             </div>
 
-            {/* property card */}
-            <div className="w-full rounded-lg py-2">
+            <div className="w-full py-2">
                 <Swiper
                     slidesPerView={1}
                     spaceBetween={5}
                     navigation={{
-                        prevEl: ".custom-prev",
-                        nextEl: ".custom-next",
+                        nextEl: '.custom-next',
+                        prevEl: '.custom-prev',
                     }}
                     breakpoints={breakpointsResponsive}
-                    onInit={(swiper) => handleSwiperEvents(swiper)}
                     onSlideChange={(swiper) => handleSwiperEvents(swiper)}
-                    modules={[Autoplay, Navigation]}
-                    className="mySwiper p-1 [&_.swiper-wrapper]:!ease-linear [&_.swiper-wrapper]:!duration-300"
+                    onInit={(swiper) => handleSwiperEvents(swiper)}
+                    modules={[Navigation]}
+                    className="mySwiper p-1 ![&_.swiper-wrapper]:!ease-in-out ![&_.swiper-wrapper]:!duration-300"
                 >
                     {testimonialData.map((item) => (
-                        <SwiperSlide key={item.id} className='p-1'>
+                        <SwiperSlide key={item.id}>
+
                             <div className="w-full h-auto p-6 space-y-10 group bg-neutral-800/10 rounded-xl border border-neutral-800/70">
                                 <p className="text-neutral-300 text-base font-normal">
                                     {item.desc}
                                 </p>
+
                                 <div className="w-full flex items-center justify-between">
                                     <div className="flex items-center gap-3">
-                                        <img
-                                            src={item.img}
-                                            alt={item.name}
-                                            className="w-12 h-12 object-cover object-center rounded-full border"
-                                        />
+                                        <img src={item.img} alt={item.name} className="w-12 h-12 object-center object-cover rounded-full border" />
+
                                         <div className="space-y-1">
                                             <p className="text-neutral-300 text-base font-semibold">
                                                 {item.name}
@@ -110,15 +102,18 @@ const Testimonials = () => {
 
                                     <div className="flex items-center gap-1 bg-yellow-500/5 rounded-full px-2 py-1">
                                         <FaStar className='text-yellow-600 text-sm' />
-                                        <p className="text-xs text-yellow-600">{item.rating}</p>
+                                        <p className="text-xs text-yellow-600">
+                                            {item.rating}
+                                        </p>
                                     </div>
-
                                 </div>
                             </div>
+
                         </SwiperSlide>
                     ))}
                 </Swiper>
             </div>
+
         </div>
     )
 }
